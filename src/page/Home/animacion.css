@@ -1,0 +1,216 @@
+.animation-page {
+  position: relative;
+  min-height: 100svh;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  padding: clamp(24px, 4vw, 56px);
+  background:
+    radial-gradient(
+      ellipse at -4% 6%,
+      rgba(255, 255, 255, 0.98) 0%,
+      rgba(249, 252, 255, 0.96) 18%,
+      rgba(234, 245, 255, 0.72) 36%,
+      rgba(234, 245, 255, 0.16) 58%,
+      transparent 68%
+    ),
+    radial-gradient(circle at 76% 28%, rgba(118, 162, 255, 0.22), transparent 26%),
+    linear-gradient(145deg, #d3ebff 0%, #c2e0ff 46%, #aac9ff 100%);
+}
+
+.animation-shell {
+  position: relative;
+  z-index: 1;
+  width: min(1180px, 100%);
+  min-height: min(860px, calc(100svh - 48px));
+  display: grid;
+  grid-template-columns: minmax(260px, 320px) 1fr;
+  grid-template-rows: 1fr auto;
+  grid-template-areas:
+    "copy stage"
+    "actions stage";
+  gap: clamp(28px, 4vw, 56px);
+  align-items: stretch;
+}
+
+.animation-copy {
+  grid-area: copy;
+  align-self: center;
+}
+
+.animation-eyebrow {
+  margin: 0;
+  color: #2a58ff;
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.animation-copy h1 {
+  margin: 10px 0 0;
+  color: #182238;
+  font-family: "Aptos Display", "Trebuchet MS", sans-serif;
+  font-size: clamp(2.8rem, 6vw, 4.8rem);
+  line-height: 0.98;
+}
+
+.animation-text {
+  margin: 20px 0 0;
+  max-width: 28rem;
+  color: #22304f;
+  font-size: clamp(1rem, 1.8vw, 1.15rem);
+  line-height: 1.45;
+}
+
+.animation-stage {
+  grid-area: stage;
+  position: relative;
+  display: grid;
+  place-items: center;
+  padding: clamp(16px, 3vw, 32px);
+}
+
+.animation-svg {
+  display: block;
+  overflow: visible;
+}
+
+.animation-svg__path {
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: center;
+  will-change: transform, opacity;
+  animation: animation-path-reveal 560ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation-delay: var(--path-delay, 0ms);
+}
+
+.animation-illustration {
+  width: min(100%, 920px);
+  height: auto;
+  filter: drop-shadow(0 26px 36px rgba(65, 105, 184, 0.14));
+}
+
+.animation-actions {
+  grid-area: actions;
+  align-self: end;
+}
+
+.animation-back {
+  min-width: 220px;
+  padding: 16px 28px;
+  border: 0;
+  border-radius: 999px;
+  background: #ffffff;
+  color: #2a58ff;
+  font-family: "Aptos Display", "Trebuchet MS", sans-serif;
+  font-size: 1.08rem;
+  font-weight: 700;
+  box-shadow: 0 18px 28px rgba(82, 109, 156, 0.24);
+  cursor: pointer;
+  transition:
+    transform 160ms ease,
+    box-shadow 160ms ease;
+}
+
+.animation-back:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 22px 30px rgba(82, 109, 156, 0.3);
+}
+
+.animation-back:focus-visible {
+  outline: 3px solid rgba(42, 88, 255, 0.35);
+  outline-offset: 4px;
+}
+
+.animation-orbit {
+  position: absolute;
+  border: 2px solid #2b5cff;
+  border-radius: 50%;
+  opacity: 0.9;
+  pointer-events: none;
+}
+
+.animation-orbit--top-left {
+  top: -92px;
+  left: -76px;
+  width: 220px;
+  height: 220px;
+}
+
+.animation-orbit--right {
+  top: 20%;
+  right: -170px;
+  width: 340px;
+  height: 340px;
+}
+
+.animation-orbit--bottom-left {
+  bottom: -120px;
+  left: -92px;
+  width: 240px;
+  height: 240px;
+}
+
+@keyframes animation-path-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.985);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@media (max-width: 900px) {
+  .animation-shell {
+    min-height: calc(100svh - 48px);
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr auto;
+    grid-template-areas:
+      "copy"
+      "stage"
+      "actions";
+    text-align: center;
+  }
+
+  .animation-copy {
+    align-self: start;
+  }
+
+  .animation-text {
+    margin-inline: auto;
+  }
+
+  .animation-actions {
+    justify-self: center;
+  }
+}
+
+@media (max-width: 640px) {
+  .animation-page {
+    padding: 24px;
+  }
+
+  .animation-shell {
+    min-height: calc(100svh - 48px);
+  }
+
+  .animation-illustration {
+    width: min(100%, 440px);
+  }
+
+  .animation-back {
+    width: min(100%, 280px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animation-svg__path {
+    opacity: 1;
+    animation: none;
+    transform: none;
+  }
+}
