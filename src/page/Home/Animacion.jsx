@@ -14,97 +14,80 @@ const [, , manoWidth = 1343, manoHeight = 1171] = manoViewBox
   .split(/\s+/)
   .map((value) => Number(value))
 
-function Animacion({
-  className = 'home-illustration',
+export function Animacion({
+  className = '',
   viewBox = manoViewBox,
   height,
   glow = true,
   cycle = 0,
+  animated = true,
 }) {
   const maskId = useId().replace(/:/g, '')
+  const componentClassName = ['animation-component', className].filter(Boolean).join(' ')
+  const motionClassName = [
+    'animation-component__motion',
+    animated && 'animation-component__motion--animated',
+  ]
+    .filter(Boolean)
+    .join(' ')
 
   return (
-    <svg
-      key={cycle}
-      className={`animation-svg ${className}`.trim()}
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox={viewBox}
-      height={height}
-      style={{
-        display: 'block',
-        overflow: 'visible',
-        ...(glow ? { filter: 'drop-shadow(0 0 6px rgba(42,34,102,0.2))' } : {}),
-      }}
-      role="img"
-      aria-label="Ilustracion de una persona sobre una mano robotica"
-    >
-      <defs>
-        <mask
-          id={maskId}
-          maskUnits="userSpaceOnUse"
-          maskContentUnits="userSpaceOnUse"
-          x="0"
-          y="0"
-          width={manoWidth}
-          height={manoHeight}
+    <div className={componentClassName}>
+      <div className={motionClassName}>
+        <svg
+          key={cycle}
+          className="animation-svg"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox={viewBox}
+          width="100%"
+          height={height}
+          style={{
+            display: 'block',
+            overflow: 'visible',
+            ...(glow ? { filter: 'drop-shadow(0 0 6px rgba(42,34,102,0.2))' } : {}),
+          }}
+          role="img"
+          aria-label="Ilustracion de una persona sobre una mano robotica"
         >
-          <rect x="0" y="0" width={manoWidth} height={manoHeight} fill="black" />
-          <g transform={manoTransform}>
-            {manoPaths.map((d, index) => (
-              <path
-                key={`${cycle}-${index}`}
-                className="animation-svg__path"
-                style={{ '--path-delay': `${index * 8}ms` }}
-                fill="white"
-                d={d}
-              />
-            ))}
-          </g>
-        </mask>
-      </defs>
+          <defs>
+            <mask
+              id={maskId}
+              maskUnits="userSpaceOnUse"
+              maskContentUnits="userSpaceOnUse"
+              x="0"
+              y="0"
+              width={manoWidth}
+              height={manoHeight}
+            >
+              <rect x="0" y="0" width={manoWidth} height={manoHeight} fill="black" />
+              <g transform={manoTransform}>
+                {manoPaths.map((d, index) => (
+                  <path
+                    key={`${cycle}-${index}`}
+                    className="animation-svg__path"
+                    style={{ '--path-delay': `${index * 8}ms` }}
+                    fill="white"
+                    d={d}
+                  />
+                ))}
+              </g>
+            </mask>
+          </defs>
 
-      <image
-        href={manoPng}
-        x="0"
-        y="0"
-        width={manoWidth}
-        height={manoHeight}
-        preserveAspectRatio="xMidYMid meet"
-        mask={`url(#${maskId})`}
-      />
-    </svg>
+          <image
+            href={manoPng}
+            x="0"
+            y="0"
+            width={manoWidth}
+            height={manoHeight}
+            preserveAspectRatio="xMidYMid meet"
+            mask={`url(#${maskId})`}
+          />
+        </svg>
+      </div>
+    </div>
   )
 }
 
-export function AnimacionPreview({ onBack }) {
-  return (
-    <main className="animation-page">
-      <span className="animation-orbit animation-orbit--top-left" aria-hidden="true" />
-      <span className="animation-orbit animation-orbit--right" aria-hidden="true" />
-      <span className="animation-orbit animation-orbit--bottom-left" aria-hidden="true" />
-
-      <section className="animation-shell">
-        <div className="animation-copy">
-          <p className="animation-eyebrow">Vista previa</p>
-          <h1>Animacion.jsx</h1>
-          <p className="animation-text">
-            Esta versi&oacute;n usa los colores reales de `Mano.png` y revela la ilustraci&oacute;n
-            con los `path` de `Mano.svg`, uno por uno.
-          </p>
-        </div>
-
-        <div className="animation-stage">
-          <Animacion className="animation-illustration" cycle={1} />
-        </div>
-
-        <div className="animation-actions">
-          <button type="button" className="animation-back" onClick={onBack}>
-            Volver al home
-          </button>
-        </div>
-      </section>
-    </main>
-  )
-}
 
 export default Animacion

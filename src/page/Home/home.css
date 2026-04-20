@@ -96,8 +96,17 @@
 }
 
 .home-illustration {
-  width: min(100%, 540px);
+  width: 100%;
+  display: block;
   filter: drop-shadow(0 24px 32px rgba(65, 105, 184, 0.12));
+}
+
+.home-animation-wrapper {
+  width: clamp(390px, 36vw, 580px);
+  margin-left: auto;
+  animation: home-animation-float 2.4s ease-in-out infinite;
+  will-change: transform;
+  transform-origin: 58% 82%;
 }
 
 .home-visual {
@@ -107,6 +116,7 @@
   place-items: center;
   min-height: clamp(360px, 45vw, 600px);
   padding: clamp(24px, 3vw, 40px);
+  overflow: visible;
 }
 
 .home-actions {
@@ -199,6 +209,25 @@
   height: 240px;
 }
 
+@keyframes home-animation-float {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) rotate(0deg);
+  }
+
+  22% {
+    transform: translate3d(12px, -22px, 0) rotate(-2.2deg);
+  }
+
+  50% {
+    transform: translate3d(26px, -38px, 0) rotate(1.9deg);
+  }
+
+  78% {
+    transform: translate3d(8px, -14px, 0) rotate(-0.9deg);
+  }
+}
+
 @media (max-width: 900px) {
   .home-surface {
     position: relative;
@@ -217,6 +246,11 @@
   .home-copy {
     align-items: center;
     margin: 0 auto;
+  }
+
+  .home-animation-wrapper {
+    width: min(100%, 470px);
+    margin-inline: auto;
   }
 
   .home-orbit--right {
@@ -251,14 +285,13 @@
     font-size: 1rem;
   }
 
-  .home-illustration {
-    width: min(100%, 360px);
-    margin-top: 0;
-  }
-
   .home-visual {
     min-height: auto;
-    padding: 0;
+    padding: 12px 0 0;
+  }
+
+  .home-animation-wrapper {
+    width: min(100%, 340px);
   }
 
   .home-actions {
@@ -270,5 +303,11 @@
   .home-preview-button,
   .home-cta {
     width: min(100%, 280px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-animation-wrapper {
+    animation: none;
   }
 }

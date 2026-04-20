@@ -71,6 +71,149 @@
   padding: clamp(16px, 3vw, 32px);
 }
 
+
+
+.animation-scene {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1.08;
+  display: grid;
+  place-items: center;
+  isolation: isolate;
+}
+
+.animation-scene__halo {
+  position: absolute;
+  inset: 12% 12% 18%;
+  z-index: 0;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle, rgba(255, 255, 255, 0.96) 0%, rgba(255, 255, 255, 0.62) 34%, rgba(187, 217, 255, 0.22) 60%, transparent 78%);
+  filter: blur(8px);
+  opacity: 0.9;
+}
+
+.animation-scene__illustration {
+  position: relative;
+  z-index: 2;
+  width: 88%;
+  height: auto;
+  transform: translateY(-5%);
+}
+
+.animation-scene__cloud,
+.animation-scene__shadow,
+.animation-scene__spark {
+  position: absolute;
+  pointer-events: none;
+}
+
+.animation-scene__cloud {
+  left: 50%;
+  border-radius: 999px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.98) 0%, rgba(243, 249, 255, 0.96) 56%, rgba(214, 231, 255, 0.88) 100%);
+  box-shadow:
+    0 22px 48px rgba(88, 126, 196, 0.14),
+    inset 0 -10px 18px rgba(173, 204, 244, 0.34);
+}
+
+.animation-scene__cloud::before,
+.animation-scene__cloud::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  background: inherit;
+}
+
+.animation-scene__cloud--back {
+  bottom: 17%;
+  z-index: 1;
+  width: 56%;
+  height: 13%;
+  transform: translateX(-50%);
+  opacity: 0.72;
+  filter: blur(2px);
+}
+
+.animation-scene__cloud--back::before {
+  width: 32%;
+  height: 140%;
+  left: 10%;
+  bottom: 12%;
+}
+
+.animation-scene__cloud--back::after {
+  width: 26%;
+  height: 116%;
+  right: 12%;
+  bottom: 20%;
+}
+
+.animation-scene__cloud--front {
+  bottom: 6%;
+  z-index: 3;
+  width: 68%;
+  height: 17%;
+  transform: translateX(-50%);
+}
+
+.animation-scene__cloud--front::before {
+  width: 27%;
+  height: 150%;
+  left: 8%;
+  bottom: 6%;
+}
+
+.animation-scene__cloud--front::after {
+  width: 30%;
+  height: 136%;
+  right: 9%;
+  bottom: 12%;
+}
+
+.animation-scene__shadow {
+  left: 50%;
+  bottom: 3%;
+  z-index: 0;
+  width: 54%;
+  height: 8%;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(120, 151, 204, 0.24) 0%, rgba(120, 151, 204, 0.14) 42%, transparent 76%);
+  filter: blur(10px);
+}
+
+.animation-scene__spark {
+  z-index: 1;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.95) 0%, rgba(181, 218, 255, 0.72) 48%, transparent 74%);
+  opacity: 0.84;
+  animation: animation-spark 5.2s ease-in-out infinite;
+}
+
+.animation-scene__spark--one {
+  top: 18%;
+  left: 18%;
+}
+
+.animation-scene__spark--two {
+  top: 10%;
+  right: 18%;
+  width: 12px;
+  height: 12px;
+  animation-delay: 1.2s;
+}
+
+.animation-scene__spark--three {
+  top: 34%;
+  right: 8%;
+  width: 14px;
+  height: 14px;
+  animation-delay: 2.2s;
+}
+
 .animation-svg {
   display: block;
   overflow: visible;
@@ -86,9 +229,9 @@
 }
 
 .animation-illustration {
-  width: min(100%, 920px);
-  height: auto;
-  filter: drop-shadow(0 26px 36px rgba(65, 105, 184, 0.14));
+  animation: animation-fly 4s ease-in-out infinite both;
+  will-change: transform;
+  transform-origin: center bottom;
 }
 
 .animation-actions {
@@ -151,6 +294,30 @@
   width: 240px;
   height: 240px;
 }
+/* AGREGA esto al .animation-stage que ya tienes: */
+.animation-stage {
+  grid-area: stage;
+  position: relative;
+  display: grid;
+  place-items: center;
+  padding: clamp(16px, 3vw, 32px);
+  min-height: 400px;      /* ← agrega */
+}
+
+/* AGREGA un wrapper con tamaño definido: */
+.animation-fly-wrapper {
+  width: min(560px, 100%);   /* ← agrega */
+  display: block;             /* ← agrega */
+}
+
+/* Tu .animation-illustration ya tiene la animación, solo agrégale el width: */
+.animation-illustration {
+  width: 100%;                /* ← agrega */
+  height: auto;               /* ← agrega */
+  animation: animation-fly 4s ease-in-out infinite both;
+  will-change: transform;
+  transform-origin: center bottom;
+}
 
 @keyframes animation-path-reveal {
   from {
@@ -161,6 +328,33 @@
   to {
     opacity: 1;
     transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes animation-fly {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  30% {
+    transform: translateY(-24px) rotate(-2deg);
+  }
+  60% {
+    transform: translateY(-12px) rotate(1.3deg);
+  }
+  80% {
+    transform: translateY(-19px) rotate(-0.7deg);
+  }
+}
+
+@keyframes animation-spark {
+  0%, 100% {
+    transform: translate3d(0, 0, 0) scale(0.9);
+    opacity: 0.5;
+  }
+
+  50% {
+    transform: translate3d(0, -12px, 0) scale(1.08);
+    opacity: 0.95;
   }
 }
 
@@ -198,8 +392,19 @@
     min-height: calc(100svh - 48px);
   }
 
-  .animation-illustration {
-    width: min(100%, 440px);
+ 
+
+  .animation-scene__illustration {
+    width: 92%;
+  }
+
+  .animation-scene__cloud--back {
+    width: 62%;
+  }
+
+  .animation-scene__cloud--front {
+    width: 76%;
+    height: 18%;
   }
 
   .animation-back {
@@ -212,5 +417,11 @@
     opacity: 1;
     animation: none;
     transform: none;
+  }
+
+
+
+  .animation-scene__spark {
+    animation: none;
   }
 }

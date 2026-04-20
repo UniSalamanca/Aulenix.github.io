@@ -1,7 +1,7 @@
 import Animacion from './Animacion.jsx'
 import './home.css'
 
-function Home({ onOpenAnimation }) {
+function Home({ onOpenAnimation, onOpenLogin }) {
   return (
     <main className="home-page">
       <span className="home-orbit home-orbit--top-left" aria-hidden="true" />
@@ -18,11 +18,20 @@ function Home({ onOpenAnimation }) {
         </header>
 
         <div className="home-visual">
-          <Animacion className="home-illustration" />
+          <div className="home-animation-wrapper">
+            <Animacion className="home-illustration" />
+          </div>
         </div>
 
         <div className="home-actions">
-          <button type="button" className="home-cta">
+          <button
+            type="button"
+            className="home-preview-button"
+            onClick={() => onOpenAnimation?.()}
+          >
+            Ver animacion
+          </button>
+          <button type="button" className="home-cta" onClick={() => onOpenLogin?.()}>
             Comenzar
           </button>
         </div>

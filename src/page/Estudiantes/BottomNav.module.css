@@ -1,0 +1,81 @@
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  background: #ffffff;
+  border-top: 1px solid #E5E7EB;
+  padding: 8px 0 calc(8px + env(safe-area-inset-bottom));
+  min-height: 64px;
+  box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.06);
+  flex-shrink: 0;
+}
+
+.tab {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  padding: 6px 12px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  text-decoration: none;
+  color: #9CA3AF;
+  transition: color 0.2s ease;
+  -webkit-tap-highlight-color: transparent;
+  min-width: 52px;
+}
+
+.tab.active {
+  color: #3B82F6;
+}
+
+.tab:hover {
+  color: #3B82F6;
+}
+
+.icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+}
+
+.label {
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+}
+
+/* Center tab — special blue circle */
+.centerTab {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+  cursor: pointer;
+  margin-top: -22px;
+}
+
+.centerIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: #3B82F6;
+  color: #ffffff;
+  box-shadow: 0 4px 16px rgba(59, 130, 246, 0.45);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.centerTab:hover .centerIcon,
+.centerTab.active .centerIcon {
+  transform: scale(1.08);
+  box-shadow: 0 6px 20px rgba(59, 130, 246, 0.55);
+}
